@@ -2,4 +2,11 @@
 
 ```
 npm install
+
+```
+
+## Para subir a Heroku
+
+```
+git push heroku main
 ```
