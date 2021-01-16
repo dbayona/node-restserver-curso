@@ -23,6 +23,8 @@ heroku config:set MONGO_URI="XXXXXXX"
 
 ## Google Sign In
 
+https://console.developers.google.com/
+
 Si se presenta el siguiente mensaje de error en la consola del explorador:
 - Not a valid origin for the client: url has not been whitelisted for client ID “ID”
 
