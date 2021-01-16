@@ -2,11 +2,19 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
+const { verificarToken, verificarAdmin_Role } = require('../middleware/autenticacion');
 
 const app = express();
 
 //Obtener todos los usuarios con paginacion
-app.get('/usuario', function(req, res) {
+//Se utiliza un middleware verificarToken
+app.get('/usuario', verificarToken, (req, res) => {
+
+    /*return res.json({
+        usuario: req.usuario,
+        nombre: req.usuario.nombre,
+        email: req.usuario.email
+    });*/
 
     let desde = Number(req.query.desde) || 0;
 
@@ -43,7 +51,7 @@ app.get('/usuario', function(req, res) {
 });
 
 //Crear Usuario
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificarToken, verificarAdmin_Role], (req, res) => {
 
     let body = req.body;
 
@@ -84,7 +92,7 @@ app.post('/usuario', function(req, res) {
 });
 
 //Actualizar usuario
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificarToken, verificarAdmin_Role], (req, res) => {
     let id = req.params.id;
 
     //Arreglo con los campos que permitire actualizar, por medio de la dependencia: underscore
@@ -109,7 +117,7 @@ app.put('/usuario/:id', (req, res) => {
 });
 
 //Eliminar usuario
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificarToken, verificarAdmin_Role], (req, res) => {
 
     let id = req.params.id;
 
